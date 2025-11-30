@@ -1,0 +1,5 @@
+nonsense/
+nonsensedatas/
+backend/env
+venv/
+backend/__pycache__

@@ -1,0 +1,45 @@
+{
+  "id": 1,
+  "title": "Dell XPS 13 9300 Laptop",
+  "description": "High-performance ultrabook with Intel i7, 16GB RAM, 512GB SSD",
+  "price": 1299,
+  "discountPercentage": 10,
+  "rating": 4.5,
+  "stock": 50,
+  "brand": "Dell",
+  "weight": 2,
+  "dimensions": {
+    "width": 13.76,
+    "height": 29,
+    "depth": 21.42
+  },
+  "warrantyInformation": "2 year warranty",
+  "shippingInformation": "Ships in 2 weeks",
+  "availabilityStatus": "In Stock",
+  "reviews": [
+    {
+      "rating": 3,
+      "comment": "Poor quality!",
+      "date": "2025-04-30T09:41:02.053Z",
+      "reviewerName": "Charlotte Lopez"
+    },
+    {
+      "rating": 4,
+      "comment": "Very satisfied!",
+      "date": "2025-04-30T09:41:02.053Z",
+      "reviewerName": "Alice Smith"
+    },
+    {
+      "rating": 2,
+      "comment": "Disappointing product!",
+      "date": "2025-04-30T09:41:02.053Z",
+      "reviewerName": "Ava Taylor"
+    }
+  ],
+  "images": [
+    "https://cdn.dummyjson.com/product-images/laptops/new-dell-xps-13-9300-laptop/1.webp",
+    "https://cdn.dummyjson.com/product-images/laptops/new-dell-xps-13-9300-laptop/2.webp",
+    "https://cdn.dummyjson.com/product-images/laptops/new-dell-xps-13-9300-laptop/3.webp"
+  ],
+  "thumbnail": "https://cdn.dummyjson.com/product-images/laptops/new-dell-xps-13-9300-laptop/thumbnail.webp"
+}
