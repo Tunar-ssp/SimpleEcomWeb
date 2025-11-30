@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from datetime import datetime
-from utils import (
+from ..utils import (
     load_json, save_json, calculate_product_rating, find_product,
     PRODUCTS_FILE
 )

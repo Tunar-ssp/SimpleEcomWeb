@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from utils import (
+from ..utils import (
     load_json, save_json, find_user_cart, find_user, find_product,
     CARTS_FILE, USERS_FILE, PRODUCTS_FILE
 )
