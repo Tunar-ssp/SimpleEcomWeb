@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <h1>E-Commerce Test</h1>
+    <button onclick="testAPI()">Test API</button>
+    <pre id="result"></pre>
+
+    <script>
+        async function testAPI() {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/products');
+                const data = await res.json();
+                document.getElementById('result').textContent = JSON.stringify(data.slice(0, 2), null, 2);
+            } catch (e) {
+                document.getElementById('result').textContent = 'Error: ' + e.message;
+            }
+        }
+    </script>
+</body>
+</html>
