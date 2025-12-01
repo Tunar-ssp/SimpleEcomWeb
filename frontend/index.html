@@ -12,9 +12,7 @@
         <h1>🛍️ SSP Shop</h1>
         <nav class="nav">
             <a href="index.html" class="btn btn-secondary">Products</a>
-            <a href="profile.html" class="btn btn-secondary">Profile</a>
-            <a href="login.html" class="btn btn-secondary">Login</a>
-            <a href="register.html" class="btn btn-secondary">Register</a>
+            <div id="authNav"></div>
             <div class="cart-icon" onclick="goToCart()">
                 🛒
                 <span class="cart-count" id="cart-count">0</span>
@@ -29,90 +27,60 @@
             <aside class="filter">
                 <h3>🔍 Filters</h3>
                 
-                <!-- Price Filter -->
                 <div class="filter-group">
-                    <label>
-                        <strong>Price Range</strong>
-                    </label>
-                    <input 
-                        type="range" 
-                        id="priceFilter" 
-                        min="0" 
-                        max="5000" 
-                        value="5000"
-                        class="filter-slider"
-                        onchange="applyFilters()"
-                    >
-                    <p id="priceValue">Max: $5000</p>
+                    <label><strong>Price</strong></label>
+                    <div style="display:flex;gap:.5rem;margin-bottom:.5rem">
+                        <input type="number" id="minPrice" placeholder="Min" value="0" min="0" onchange="applyFilters()" style="width:60px;padding:.4rem;border-radius:6px;border:1px solid rgba(255,0,110,.3);background:rgba(255,255,255,.05);color:#fff">
+                        <input type="number" id="maxPrice" placeholder="Max" value="10000" max="10000" onchange="applyFilters()" style="width:60px;padding:.4rem;border-radius:6px;border:1px solid rgba(255,0,110,.3);background:rgba(255,255,255,.05);color:#fff">
+                    </div>
+                    <p id="priceRange" style="font-size:.9rem;color:#aaa">$0 - $10000</p>
                 </div>
 
-                <!-- Brand Filter -->
                 <div class="filter-group">
-                    <label><strong>Brands</strong></label>
+                    <label><strong>Brand</strong></label>
                     <div id="brandFilters"></div>
                 </div>
 
-                <!-- Rating Filter -->
                 <div class="filter-group">
-                    <label><strong>Rating</strong></label>
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            value="4" 
-                            onchange="applyFilters()"
-                        > 4+ Stars
-                    </label>
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            value="3" 
-                            onchange="applyFilters()"
-                        > 3+ Stars
-                    </label>
+                    <label><strong>Min Rating</strong></label>
+                    <select id="ratingFilter" onchange="applyFilters()" style="width:100%;padding:.5rem;border-radius:6px;border:1px solid rgba(255,0,110,.3);background:rgba(255,255,255,.05);color:#fff">
+                        <option value="0">All</option>
+                        <option value="3">⭐⭐⭐ 3+</option>
+                        <option value="4">⭐⭐⭐⭐ 4+</option>
+                        <option value="5">⭐⭐⭐⭐⭐ 5</option>
+                    </select>
                 </div>
 
-                <!-- Stock Filter -->
                 <div class="filter-group">
-                    <label>
-                        <input 
-                            type="checkbox" 
-                            id="inStockFilter" 
-                            onchange="applyFilters()"
-                        > In Stock Only
-                    </label>
+                    <label><input type="checkbox" id="inStockFilter" onchange="applyFilters()"> In Stock</label>
                 </div>
 
-                <!-- Clear Filters Button -->
-                <button class="btn btn-primary" onclick="clearFilters()" style="width: 100%; margin-top: 1rem;">
-                    Clear Filters
-                </button>
             </aside>
 
             <!-- Products Section -->
             <section class="products-section">
-                <!-- Search Bar -->
-                <div class="search-bar">
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        placeholder="Search products..." 
-                        onkeyup="applyFilters()"
-                        class="search-input"
-                    >
-                    <select id="sortSelect" onchange="applyFilters()" class="sort-select">
+                <input type="text" id="searchInput" placeholder="Search products..." onkeyup="applyFilters()" style="width:100%;padding:.8rem;border-radius:8px;border:1px solid rgba(255,0,110,.3);background:rgba(255,255,255,.05);color:#fff;margin-bottom:1rem">
+                
+                <div style="display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap">
+                    <select id="sortSelect" onchange="applyFilters()" style="padding:.5rem;border-radius:6px;border:1px solid rgba(255,0,110,.3);background:rgba(255,255,255,.05);color:#fff">
                         <option value="default">Sort By</option>
                         <option value="price-low">Price: Low to High</option>
                         <option value="price-high">Price: High to Low</option>
                         <option value="rating">Highest Rated</option>
-                        <option value="newest">Newest</option>
+                    </select>
+                    
+                    <select id="itemsPerPage" onchange="displayProducts()" style="padding:.5rem;border-radius:6px;border:1px solid rgba(255,0,110,.3);background:rgba(255,255,255,.05);color:#fff">
+                        <option value="12">12 per page</option>
+                        <option value="24">24 per page</option>
+                        <option value="48">48 per page</option>
+                        <option value="96">96 per page</option>
                     </select>
                 </div>
-
+                
                 <!-- Products Grid -->
-                <div class="products-grid" id="productsGrid">
-                    <!-- Products will be loaded here by JavaScript -->
+                <div class="products-grid" id="productsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem;margin-bottom:2rem">
                 </div>
-
+                
                 <!-- Pagination -->
                 <div class="pagination" id="pagination">
                     <!-- Pagination buttons will be generated here -->

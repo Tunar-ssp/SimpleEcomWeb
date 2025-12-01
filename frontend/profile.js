@@ -44,9 +44,9 @@ async function saveProfile(e) {
     } catch (e) { showError(e.message || 'Failed'); }
 }
 
-function logout() {
-    if (confirm('Logout?')) { clearCurrentUser(); window.location.href = 'index.html'; }
-}
+function logout() { clearCurrentUser(); window.location.href = 'index.html'; }
+
+function goToCart() { window.location.href = 'cart.html'; }
 
 function showSuccess(msg) {
     const a = document.createElement('div');

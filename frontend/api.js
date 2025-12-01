@@ -11,6 +11,7 @@ async function apiCall(endpoint, options = {}) {
 
 async function getProducts() { return apiCall('/products'); }
 async function getProduct(id) { return apiCall(`/products/${id}`); }
+async function addReview(id, username, comment, rating) { return apiCall(`/products/${id}/review`, { method: 'POST', body: JSON.stringify({ username, comment, rating }) }); }
 async function registerUser(data) { return apiCall('/register', { method: 'POST', body: JSON.stringify(data) }); }
 async function loginUser(username, password) { return apiCall('/login', { method: 'POST', body: JSON.stringify({ username, password }) }); }
 async function getUserProfile(username) { return apiCall(`/user/${username}`); }

@@ -2,11 +2,26 @@ let allProducts = [], cartData = null;
 
 async function initCart() {
     if (!isLoggedIn()) { window.location.href = 'login.html'; return; }
+    updateAuthNav();
     try {
         allProducts = await getProducts();
         await loadCart();
+        updateCartCount();
     } catch (e) { showError('Failed to load cart'); }
 }
+
+function updateAuthNav() {
+    const nav = document.getElementById('authNav');
+    if (isLoggedIn()) {
+        nav.innerHTML = `<a href="profile.html" class="btn btn-secondary">👤 ${getCurrentUser()}</a><button class="btn btn-secondary" onclick="logout()">Logout</button>`;
+    } else {
+        nav.innerHTML = `<a href="login.html" class="btn btn-secondary">Login</a><a href="register.html" class="btn btn-secondary">Register</a>`;
+    }
+}
+
+function logout() { clearCurrentUser(); window.location.href = 'index.html'; }
+
+function goToCart() { window.location.href = 'cart.html'; }
 
 async function loadCart() {
     try {

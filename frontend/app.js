@@ -3,12 +3,29 @@ const itemsPerPage = 12;
 
 async function initApp() {
     try {
+        updateAuthNav();
+        console.log('Loading products...');
         allProducts = await getProducts();
+        console.log('Products loaded:', allProducts.length);
         filteredProducts = [...allProducts];
         setupBrands();
         displayProducts();
         updateCartCount();
-    } catch (e) { showError('Failed to load products'); }
+    } catch (e) { console.error('Error:', e); showError('Failed: ' + e.message); }
+}
+
+function updateAuthNav() {
+    const nav = document.getElementById('authNav');
+    if (isLoggedIn()) {
+        nav.innerHTML = `<a href="profile.html" class="btn btn-secondary">👤 ${getCurrentUser()}</a><button class="btn btn-secondary" onclick="logout()">Logout</button>`;
+    } else {
+        nav.innerHTML = `<a href="login.html" class="btn btn-secondary">Login</a><a href="register.html" class="btn btn-secondary">Register</a>`;
+    }
+}
+
+function logout() {
+    clearCurrentUser();
+    window.location.href = 'index.html';
 }
 
 function setupBrands() {
@@ -26,14 +43,16 @@ function applyFilters() {
     const search = document.getElementById('searchInput').value.toLowerCase();
     if (search) f = f.filter(p => p.title.toLowerCase().includes(search) || p.brand.toLowerCase().includes(search));
     
-    const maxPrice = parseInt(document.getElementById('priceFilter').value);
-    if (maxPrice < 5000) {
-        f = f.filter(p => p.price <= maxPrice);
-        document.getElementById('priceValue').textContent = `Max: $${maxPrice}`;
-    }
+    const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
+    const maxPrice = parseInt(document.getElementById('maxPrice').value) || 10000;
+    f = f.filter(p => p.price >= minPrice && p.price <= maxPrice);
+    document.getElementById('priceRange').textContent = `$${minPrice} - $${maxPrice}`;
     
     const brands = Array.from(document.querySelectorAll('#brandFilters input:checked')).map(cb => cb.value);
     if (brands.length) f = f.filter(p => brands.includes(p.brand));
+    
+    const minRating = parseInt(document.getElementById('ratingFilter').value) || 0;
+    if (minRating > 0) f = f.filter(p => calcRating(p) >= minRating);
     
     if (document.getElementById('inStockFilter').checked) f = f.filter(p => p.stock > 0);
     
@@ -49,8 +68,9 @@ function applyFilters() {
 
 function displayProducts() {
     const grid = document.getElementById('productsGrid');
-    const start = (currentPage - 1) * itemsPerPage;
-    const page = filteredProducts.slice(start, start + itemsPerPage);
+    const perPage = parseInt(document.getElementById('itemsPerPage')?.value) || itemsPerPage;
+    const start = (currentPage - 1) * perPage;
+    const page = filteredProducts.slice(start, start + perPage);
     
     if (!page.length) {
         grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:#aaa">No products found</div>';
@@ -61,10 +81,10 @@ function displayProducts() {
     grid.innerHTML = page.map(p => {
         const rating = calcRating(p);
         const img = p.thumbnail || p.images?.[0] || '';
-        return `<div class="card" onclick="openModal(${p.id})"><div class="card-img"><img src="${img}" onerror="this.src=''"></div><div class="card-body"><div class="card-brand">${p.brand}</div><div class="card-title">${p.title}</div><div class="card-rating">${'⭐'.repeat(Math.min(5, Math.round(rating)))} (${rating})</div><div class="card-price">$${p.price}</div><div class="card-footer"><button class="btn btn-sm btn-primary" onclick="event.stopPropagation();addCart(${p.id})">Add</button></div></div></div>`;
+        return `<div class="card" onclick="window.location.href='product.html?id=${p.id}'"><div class="card-img"><img src="${img}" onerror="this.src=''"></div><div class="card-body"><div class="card-brand">${p.brand}</div><div class="card-title">${p.title}</div><div class="card-rating">${'⭐'.repeat(Math.min(5, Math.round(rating)))} (${rating})</div><div class="card-price">$${p.price}</div><div class="card-footer"><button class="btn btn-sm btn-primary" onclick="event.stopPropagation();addCart(${p.id})">Add</button></div></div></div>`;
     }).join('');
     
-    const total = Math.ceil(filteredProducts.length / itemsPerPage);
+    const total = Math.ceil(filteredProducts.length / perPage);
     let pag = '';
     if (currentPage > 1) pag += `<button onclick="goPage(${currentPage - 1})">← Prev</button>`;
     for (let i = 1; i <= total; i++) {

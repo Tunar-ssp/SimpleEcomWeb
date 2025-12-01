@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - SSP Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🛍️ SSP Shop</h1>
+        <nav class="nav">
+            <a href="index.html" class="btn btn-secondary">← Back</a>
+            <div id="authNav"></div>
+            <div class="cart-icon" onclick="goToCart()">🛒<span class="cart-count" id="cart-count">0</span></div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div style="max-width:1000px;margin:0 auto;padding:2rem">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:3rem">
+                <div>
+                    <img id="mainImg" src="" style="width:100%;border-radius:12px;margin-bottom:1rem;max-height:400px;object-fit:cover">
+                    <div id="thumbs" style="display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem"></div>
+                </div>
+                <div>
+                    <h2 id="title" style="margin-bottom:1rem"></h2>
+                    <p id="brand" style="color:#aaa;margin-bottom:1rem;font-size:.9rem"></p>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem">
+                        <div style="background:rgba(255,0,110,.1);padding:1rem;border-radius:8px"><p style="color:#aaa;font-size:.85rem">Price</p><p id="price" style="font-size:1.3rem;color:#ff006e;font-weight:bold"></p></div>
+                        <div style="background:rgba(255,0,110,.1);padding:1rem;border-radius:8px"><p style="color:#aaa;font-size:.85rem">Stock</p><p id="stock" style="font-size:1.3rem"></p></div>
+                        <div style="background:rgba(255,0,110,.1);padding:1rem;border-radius:8px"><p style="color:#aaa;font-size:.85rem">Rating</p><p id="rating" style="font-size:1.3rem"></p></div>
+                    </div>
+                    <p id="desc" style="color:#ccc;line-height:1.6;margin-bottom:2rem;font-size:.95rem"></p>
+                    <div style="display:flex;gap:1rem">
+                        <input type="number" id="qty" value="1" min="1" style="width:70px;padding:.6rem;border-radius:6px;border:1px solid #ff006e;background:rgba(255,255,255,.05);color:#fff">
+                        <button class="btn btn-primary" onclick="addToCartFromDetail()" style="flex:1">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:3rem">
+                <h3 style="color:#ff006e;margin-bottom:1rem">💬 Comments</h3>
+                <div id="comments" style="display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem"></div>
+                <div style="background:rgba(51,30,100,.3);border:1px solid rgba(255,0,110,.2);border-radius:12px;padding:1.5rem">
+                    <h4 style="margin-bottom:1rem">Add Comment</h4>
+                    <textarea id="commentText" placeholder="Your comment..." style="width:100%;padding:.8rem;border-radius:6px;border:1px solid rgba(255,0,110,.3);background:rgba(255,255,255,.05);color:#fff;resize:vertical;min-height:80px"></textarea>
+                    <div style="display:flex;gap:.5rem;margin-top:.5rem">
+                        <select id="commentRating" style="padding:.5rem;border-radius:6px;border:1px solid rgba(255,0,110,.3);background:rgba(255,255,255,.05);color:#fff">
+                            <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+                            <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+                            <option value="3">⭐⭐⭐ 3 Stars</option>
+                            <option value="2">⭐⭐ 2 Stars</option>
+                            <option value="1">⭐ 1 Star</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="addComment()">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="api.js"></script>
+    <script src="product.js"></script>
+</body>
+</html>
