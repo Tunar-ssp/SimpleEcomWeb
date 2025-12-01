@@ -17,12 +17,14 @@ def register():
     gender = data.get("gender")
     birthday = data.get("birthday")
 
-    if not username or not password:
-        return jsonify({"error": "Username and password required"}), 400
-    if gender.lower() not in ["male", "female"]:
+    if not username or not password or not name:
+        return jsonify({"error": "Username, password, and name required"}), 400
+    
+    if not gender or gender.lower() not in ["male", "female"]:
         return jsonify({"error": "Gender must be male or female"}), 400
-    if not name:
-        return jsonify({"error": "Name is required"}), 400
+    
+    if not birthday:
+        return jsonify({"error": "Birthday required"}), 400
 
     valid, msg = validate_age(birthday)
     if not valid:
@@ -53,10 +55,8 @@ def login():
         return jsonify({"error": "Username and password required"}), 400
 
     user = find_user(username)
-    if not user:
-        return jsonify({"error": "User not found"}), 404
-    if user["password"] != password:
-        return jsonify({"error": "Wrong password"}), 400
+    if not user or user["password"] != password:
+        return jsonify({"error": "Wrong username or password"}), 400
 
     return jsonify({"message": "Login successful", "username": username}), 200
 

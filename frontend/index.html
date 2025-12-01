@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSP Shop - E-Commerce</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <h1>🛍️ SSP Shop</h1>
+        <nav class="nav">
+            <a href="index.html" class="btn btn-secondary">Products</a>
+            <a href="profile.html" class="btn btn-secondary">Profile</a>
+            <a href="login.html" class="btn btn-secondary">Login</a>
+            <a href="register.html" class="btn btn-secondary">Register</a>
+            <div class="cart-icon" onclick="goToCart()">
+                🛒
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Sidebar Filters -->
+            <aside class="filter">
+                <h3>🔍 Filters</h3>
+                
+                <!-- Price Filter -->
+                <div class="filter-group">
+                    <label>
+                        <strong>Price Range</strong>
+                    </label>
+                    <input 
+                        type="range" 
+                        id="priceFilter" 
+                        min="0" 
+                        max="5000" 
+                        value="5000"
+                        class="filter-slider"
+                        onchange="applyFilters()"
+                    >
+                    <p id="priceValue">Max: $5000</p>
+                </div>
+
+                <!-- Brand Filter -->
+                <div class="filter-group">
+                    <label><strong>Brands</strong></label>
+                    <div id="brandFilters"></div>
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="filter-group">
+                    <label><strong>Rating</strong></label>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            value="4" 
+                            onchange="applyFilters()"
+                        > 4+ Stars
+                    </label>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            value="3" 
+                            onchange="applyFilters()"
+                        > 3+ Stars
+                    </label>
+                </div>
+
+                <!-- Stock Filter -->
+                <div class="filter-group">
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            id="inStockFilter" 
+                            onchange="applyFilters()"
+                        > In Stock Only
+                    </label>
+                </div>
+
+                <!-- Clear Filters Button -->
+                <button class="btn btn-primary" onclick="clearFilters()" style="width: 100%; margin-top: 1rem;">
+                    Clear Filters
+                </button>
+            </aside>
+
+            <!-- Products Section -->
+            <section class="products-section">
+                <!-- Search Bar -->
+                <div class="search-bar">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search products..." 
+                        onkeyup="applyFilters()"
+                        class="search-input"
+                    >
+                    <select id="sortSelect" onchange="applyFilters()" class="sort-select">
+                        <option value="default">Sort By</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="newest">Newest</option>
+                    </select>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="products-grid" id="productsGrid">
+                    <!-- Products will be loaded here by JavaScript -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <!-- Pagination buttons will be generated here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal" onclick="closeProductModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeProductModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="Product">
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalTitle"></h2>
+                    <p id="modalDescription"></p>
+                    <div class="modal-details">
+                        <p><strong>Brand:</strong> <span id="modalBrand"></span></p>
+                        <p><strong>Price:</strong> $<span id="modalPrice"></span></p>
+                        <p><strong>Discount:</strong> <span id="modalDiscount"></span>%</p>
+                        <p><strong>Rating:</strong> ⭐ <span id="modalRating"></span></p>
+                        <p><strong>Stock:</strong> <span id="modalStock"></span></p>
+                        <p><strong>Warranty:</strong> <span id="modalWarranty"></span></p>
+                        <p><strong>Shipping:</strong> <span id="modalShipping"></span></p>
+                    </div>
+                    <div class="modal-actions">
+                        <input 
+                            type="number" 
+                            id="quantityInput" 
+                            min="1" 
+                            value="1" 
+                            class="quantity-input"
+                        >
+                        <button class="btn btn-primary" onclick="addToCart()">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

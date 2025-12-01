@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SSP Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <h1>🛍️ SSP Shop</h1>
+        <nav class="nav">
+            <a href="index.html" class="btn btn-secondary">Products</a>
+            <a href="cart.html" class="btn btn-secondary">Cart</a>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 style="margin-bottom: 2rem; color: #ff006e;">👤 My Profile</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <!-- User Info -->
+                <div style="background: linear-gradient(135deg, rgba(51, 30, 100, 0.3), rgba(24, 36, 62, 0.3)); border: 1px solid rgba(255, 0, 110, 0.2); border-radius: 12px; padding: 1.5rem;">
+                    <h3 style="color: #ff006e; margin-bottom: 1rem;">Account Information</h3>
+                    
+                    <div id="profileInfo" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Profile info will be loaded here -->
+                    </div>
+
+                    <button class="btn btn-primary" onclick="editProfile()" style="width: 100%; margin-top: 1rem;">
+                        Edit Profile
+                    </button>
+                </div>
+
+                <!-- Order History -->
+                <div style="background: linear-gradient(135deg, rgba(51, 30, 100, 0.3), rgba(24, 36, 62, 0.3)); border: 1px solid rgba(255, 0, 110, 0.2); border-radius: 12px; padding: 1.5rem;">
+                    <h3 style="color: #ff006e; margin-bottom: 1rem;">📦 Order History</h3>
+                    
+                    <div id="orderHistory" style="display: flex; flex-direction: column; gap: 1rem; max-height: 400px; overflow-y: auto;">
+                        <!-- Orders will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="modal" onclick="closeEditModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2 style="margin-bottom: 1.5rem; color: #ff006e;">Edit Profile</h2>
+            
+            <form onsubmit="saveProfile(event)">
+                <div class="form-group">
+                    <label for="editPassword">New Password (leave empty to keep current)</label>
+                    <input type="password" id="editPassword" placeholder="Enter new password">
+                </div>
+
+                <div class="form-group">
+                    <label for="editSurname">Last Name</label>
+                    <input type="text" id="editSurname" placeholder="Your last name">
+                </div>
+
+                <div class="form-group">
+                    <label for="editGender">Gender</label>
+                    <select id="editGender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="api.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>
