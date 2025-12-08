@@ -12,6 +12,7 @@ async function initCart() {
 
 function updateAuthNav() {
     const nav = document.getElementById('authNav');
+    if (!nav) return;
     if (isLoggedIn()) {
         nav.innerHTML = `<a href="profile.html" class="btn btn-secondary">👤 ${getCurrentUser()}</a><button class="btn btn-secondary" onclick="logout()">Logout</button>`;
     } else {
@@ -76,17 +77,19 @@ function updateSummary(sub, tax) {
 }
 
 async function checkout() {
-    if (!cartData.items?.length) { showError('Cart empty'); return; }
+    if (!cartData.items?.length) { showError('❌ Cart is empty'); return; }
+    const total = parseFloat(document.getElementById('total').textContent.replace('$', ''));
+    if (!confirm(`Proceed to checkout? Total: $${total.toFixed(2)}`)) return;
     try {
-        await checkout(getCurrentUser());
-        showSuccess('✅ Order placed!');
-        setTimeout(() => window.location.href = 'profile.html', 1500);
-    } catch (e) { showError(e.message || 'Failed'); }
+        const result = await apiCall('/checkout', { method: 'POST', body: JSON.stringify({ username: getCurrentUser() }) });
+        showSuccess('✅ Order placed successfully!');
+        setTimeout(() => { window.location.href = 'profile.html'; }, 2000);
+    } catch (e) { showError('❌ Checkout failed: ' + (e.message || 'Unknown error')); }
 }
 
 function showSuccess(msg) {
     const a = document.createElement('div');
-    a.style.cssText = 'position:fixed;top:20px;right:20px;background:#4caf50;color:#fff;padding:1rem;border-radius:8px;z-index:2000';
+    a.style.cssText = 'position:fixed;top:20px;right:20px;background:#4caf50;color:#fff;padding:1rem 1.5rem;border-radius:8px;z-index:2000;box-shadow:0 4px 15px rgba(0,0,0,.3);font-weight:600';
     a.textContent = msg;
     document.body.appendChild(a);
     setTimeout(() => a.remove(), 3000);
@@ -94,7 +97,7 @@ function showSuccess(msg) {
 
 function showError(msg) {
     const a = document.createElement('div');
-    a.style.cssText = 'position:fixed;top:20px;right:20px;background:#f44336;color:#fff;padding:1rem;border-radius:8px;z-index:2000';
+    a.style.cssText = 'position:fixed;top:20px;right:20px;background:#f44336;color:#fff;padding:1rem 1.5rem;border-radius:8px;z-index:2000;box-shadow:0 4px 15px rgba(0,0,0,.3);font-weight:600';
     a.textContent = msg;
     document.body.appendChild(a);
     setTimeout(() => a.remove(), 3000);

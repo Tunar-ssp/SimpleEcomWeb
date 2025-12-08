@@ -8,8 +8,8 @@ async function initProfile() {
         
         const orders = await getUserOrders(getCurrentUser());
         const oh = document.getElementById('orderHistory');
-        if (!orders?.length) { oh.innerHTML = '<div style="text-align:center;padding:2rem;color:#aaa"><p>No orders</p><a href="index.html" class="btn btn-primary">Shop</a></div>'; return; }
-        oh.innerHTML = orders.map(o => `<div style="background:rgba(255,255,255,.05);padding:1rem;border-radius:8px;border-left:3px solid #ff006e;margin-bottom:.5rem"><div style="display:flex;justify-content:space-between;margin-bottom:.5rem"><strong>Order #${o.order_id}</strong><span style="color:#aaa;font-size:.9rem">${o.date}</span></div><div style="font-size:.9rem;color:#ccc;margin-bottom:.5rem">${o.items.map(i => `${i.title} (x${i.quantity})`).join(', ')}</div><div style="color:#ff006e;font-weight:600">Total: $${o.total_price}</div></div>`).join('');
+        if (!orders?.length) { oh.innerHTML = '<div style="text-align:center;padding:2rem;color:#aaa"><p>📭 No orders yet</p><a href="index.html" class="btn btn-primary">Start Shopping</a></div>'; return; }
+        oh.innerHTML = orders.map((o, idx) => `<div style="background:linear-gradient(135deg,rgba(51,30,100,.4),rgba(24,36,62,.4));padding:1.2rem;border-radius:8px;border-left:4px solid #ff006e;margin-bottom:1rem;box-shadow:0 4px 10px rgba(0,0,0,.2)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem"><div style="display:flex;align-items:center;gap:.5rem"><span style="background:#ff006e;color:#fff;padding:.3rem .6rem;border-radius:6px;font-weight:700;font-size:.85rem\">#${idx + 1}</span><strong style="font-size:1.05rem;color:#fff">${new Date(o.date).toLocaleDateString()}</strong></div><span style="color:#8338ec;font-weight:600;font-size:.9rem">${new Date(o.date).toLocaleTimeString().slice(0, -3)}</span></div><div style="background:rgba(255,255,255,.05);padding:.8rem;border-radius:6px;margin-bottom:.8rem"><p style="color:#aaa;font-size:.85rem;margin-bottom:.4rem">📦 Items:</p><div style="display:flex;flex-wrap:wrap;gap:.5rem">${o.items.map(i => `<span style="background:rgba(255,0,110,.2);color:#ff006e;padding:.4rem .8rem;border-radius:6px;font-size:.85rem;white-space:nowrap">${i.title} <strong>×${i.quantity}</strong></span>`).join('')}</div></div><div style="display:flex;justify-content:space-between;align-items:center;padding-top:.8rem;border-top:1px solid rgba(255,0,110,.2)"><div style="color:#aaa;font-size:.9rem">Qty: ${o.items.reduce((s, i) => s + i.quantity, 0)} items</div><div style="color:#ff006e;font-weight:700;font-size:1.2rem">$${o.total?.toFixed(2) || '0.00'}</div></div></div>`).join('');
     } catch (e) { showError('Failed'); }
 }
 
@@ -50,7 +50,7 @@ function goToCart() { window.location.href = 'cart.html'; }
 
 function showSuccess(msg) {
     const a = document.createElement('div');
-    a.style.cssText = 'position:fixed;top:20px;right:20px;background:#4caf50;color:#fff;padding:1rem;border-radius:8px;z-index:2000';
+    a.style.cssText = 'position:fixed;top:20px;right:20px;background:#4caf50;color:#fff;padding:1rem 1.5rem;border-radius:8px;z-index:2000;box-shadow:0 4px 15px rgba(0,0,0,.3);font-weight:600';
     a.textContent = msg;
     document.body.appendChild(a);
     setTimeout(() => a.remove(), 3000);
@@ -58,7 +58,7 @@ function showSuccess(msg) {
 
 function showError(msg) {
     const a = document.createElement('div');
-    a.style.cssText = 'position:fixed;top:20px;right:20px;background:#f44336;color:#fff;padding:1rem;border-radius:8px;z-index:2000';
+    a.style.cssText = 'position:fixed;top:20px;right:20px;background:#f44336;color:#fff;padding:1rem 1.5rem;border-radius:8px;z-index:2000;box-shadow:0 4px 15px rgba(0,0,0,.3);font-weight:600';
     a.textContent = msg;
     document.body.appendChild(a);
     setTimeout(() => a.remove(), 3000);

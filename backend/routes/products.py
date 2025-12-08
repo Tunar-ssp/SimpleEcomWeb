@@ -15,6 +15,10 @@ def get_products():
     if query:
         products = [p for p in products if query in p.get("title", "").lower() or query in p.get("brand", "").lower()]
     
+    for p in products:
+        if "sold" not in p:
+            p["sold"] = 0
+    
     return jsonify(products), 200
 
 @products_bp.route("/products/<int:product_id>", methods=["GET"])
@@ -24,6 +28,8 @@ def get_product(product_id):
         return jsonify({"error": "Product not found"}), 404
     
     product["rating"] = calculate_product_rating(product)
+    if "sold" not in product:
+        product["sold"] = 0
     return jsonify(product), 200
 
 @products_bp.route("/admin/products", methods=["POST"])

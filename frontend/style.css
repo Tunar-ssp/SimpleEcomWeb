@@ -133,8 +133,11 @@ h1 {
 
 .container {
     display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 2rem;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: flex-start;
+    min-height: 80vh;
+    width: 100%;
 }
 
 /* ============================================
@@ -142,13 +145,17 @@ h1 {
    ============================================ */
 
 .filter {
-    background: linear-gradient(135deg, rgba(51, 30, 100, 0.3), rgba(24, 36, 62, 0.3));
-    border: 1px solid rgba(255, 0, 110, 0.2);
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(51, 30, 100, 0.4), rgba(24, 36, 62, 0.4));
+    border: 1.5px solid #ff006e;
+    border-radius: 16px;
+    padding: 1rem 0.8rem;
     height: fit-content;
     position: sticky;
     top: 80px;
+    z-index: 10;
+    min-width: 180px;
+    box-shadow: 0 4px 24px rgba(255,0,110,0.08);
+    font-size: 0.85rem;
 }
 
 .filter h3 {
@@ -190,6 +197,16 @@ h1 {
     margin-top: 0.5rem;
 }
 
+select {
+    position: relative;
+    z-index: 50 !important;
+}
+
+select option {
+    background: #1a1a2e;
+    color: #fff;
+}
+
 /* ============================================
    PRODUCTS SECTION
    ============================================ */
@@ -198,6 +215,7 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
 }
 
 .search-bar {
@@ -231,14 +249,25 @@ h1 {
 }
 
 .sort-select option {
-    background: #302b63;
-    color: #fff;
+background: #302b63;
+color: #fff;
+}
+
+.grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+gap: 2rem;
+width: 100%;
+align-items: stretch;
 }
 
 .products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+gap: 1.5rem;
+width: 100%;
     gap: 1.5rem;
+    width: 100%;
 }
 
 /* ============================================
@@ -586,4 +615,19 @@ h1 {
     .quantity-input {
         width: 100%;
     }
+}
+
+/* Product Page */
+.product-container {
+    max-width: 900px !important;
+    margin: 0 auto !important;
+}
+
+#mainImg {
+    max-width: 100% !important;
+    max-height: 200px !important;
+}
+
+#thumbs img {
+    max-height: 50px !important;
 }
