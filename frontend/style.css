@@ -340,7 +340,8 @@ h1 {
     z-index: 1000;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    padding: 0.5rem;
+    overflow-y: auto;
 }
 
 .modal.active {
@@ -351,24 +352,25 @@ h1 {
     background: linear-gradient(135deg, rgba(51, 30, 100, 0.95), rgba(24, 36, 62, 0.95));
     border: 1px solid rgba(255, 0, 110, 0.3);
     border-radius: 15px;
-    padding: 2rem;
-    width: 90%;
-    max-width: 800px;
-    max-height: 85vh;
+    padding: 1.5rem;
+    width: 95%;
+    max-width: 600px;
+    max-height: 90vh;
     overflow-y: auto;
     position: relative;
 }
 
 .close {
     position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    font-size: 2rem;
+    top: 0.8rem;
+    right: 1rem;
+    font-size: 1.8rem;
     cursor: pointer;
     background: none;
     border: none;
     color: #fff;
     transition: color 0.2s;
+    padding: 0;
 }
 
 .close:hover {
@@ -377,26 +379,30 @@ h1 {
 
 .modal-body {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
 }
 
 .modal-image {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1rem;
+    min-height: 200px;
 }
 
 .modal-image img {
     width: 100%;
-    border-radius: 10px;
-    max-height: 400px;
-    object-fit: cover;
+    border-radius: 8px;
+    max-height: 280px;
+    object-fit: contain;
 }
 
 .modal-info h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
     background: linear-gradient(135deg, #ff006e, #8338ec);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -404,27 +410,28 @@ h1 {
 }
 
 .modal-info p {
-    margin: 0.8rem 0;
-    line-height: 1.6;
+    margin: 0.5rem 0;
+    line-height: 1.4;
+    font-size: 0.95rem;
 }
 
 .modal-details {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 0, 110, 0.2);
     border-radius: 8px;
-    padding: 1rem;
-    margin: 1rem 0;
+    padding: 0.8rem;
+    margin: 0.8rem 0;
 }
 
 .modal-details p {
-    margin: 0.5rem 0;
+    margin: 0.4rem 0;
     font-size: 0.9rem;
 }
 
 .modal-actions {
     display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    gap: 0.8rem;
+    margin-top: 1rem;
 }
 
 .quantity-input {
@@ -529,11 +536,7 @@ h1 {
     }
 
     .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
-
-    .modal-body {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
 
     .search-bar {
@@ -552,5 +555,35 @@ h1 {
     .nav {
         width: 100%;
         justify-content: center;
+    }
+
+    .modal-content {
+        width: 98%;
+        max-width: 550px;
+        padding: 1rem;
+        max-height: 95vh;
+    }
+
+    .modal-image img {
+        max-height: 220px;
+    }
+
+    .modal-info h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-details {
+        padding: 0.6rem;
+        margin: 0.6rem 0;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .quantity-input {
+        width: 100%;
     }
 }

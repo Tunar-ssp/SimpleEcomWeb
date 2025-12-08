@@ -96,7 +96,14 @@ function displayProducts() {
 }
 
 function goPage(p) { currentPage = p; displayProducts(); window.scrollTo(0, 0); }
-function clearFilters() { document.getElementById('searchInput').value = ''; document.getElementById('priceFilter').value = 5000; document.getElementById('inStockFilter').checked = false; document.getElementById('sortSelect').value = 'default'; document.querySelectorAll('#brandFilters input').forEach(cb => cb.checked = false); applyFilters(); }
+function clearFilters() { document.getElementById('searchInput').value = ''; document.getElementById('minPrice').value = 0; document.getElementById('maxPrice').value = 10000; document.getElementById('inStockFilter').checked = false; document.getElementById('sortSelect').value = 'default'; document.querySelectorAll('#brandFilters input').forEach(cb => cb.checked = false); applyFilters(); }
+function goToCart() { if (!isLoggedIn()) { alert('Login first'); return; } window.location.href = 'cart.html'; }
+function addCart(id) { if (!isLoggedIn()) { alert('Login first'); return; } addProductToCart(id); }
+async function addProductToCart(id) { try { const user = getCurrentUser(); await addToCart(user, id, 1); updateCartCount(); } catch (e) { alert('Error: ' + e.message); } }
+async function updateCartCount() { try { const user = getCurrentUser(); if (!user) return; const cart = await getCart(user); const count = cart.items?.length || 0; document.getElementById('cart-count').textContent = count; } catch (e) { console.log('Cart count error:', e); } }
+function showError(msg) { alert(msg); }
+function closeProductModal(e) { if (e && e.target !== document.getElementById('productModal')) return; document.getElementById('productModal').style.display = 'none'; }
+window.onload = initApp;
 
 function openModal(id) {
     selectedProductId = id;
