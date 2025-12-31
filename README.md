@@ -1,6 +1,4 @@
-# E-commerce_simple_web_lesson
-
-To run this project, you need to follow these steps:
+A simple e-commerce web project built as part of a web programming lesson. This project demonstrates the basics of backend and frontend development.
 
 ```bash
 # Create a virtual environment and activate it
